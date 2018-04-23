@@ -239,14 +239,14 @@ module.exports = function core(defaultLibraryName) {
           buildDeclaratorHandler(node, 'init', path, state);
         },
 
-        JSXOpeningElement(path, { opts }) {
+        JSXOpeningElement(path, state) {
           const { node } = path;
-          buildDeclaratorHandler(node, 'name', path, opts);
+          buildDeclaratorHandler(node, 'name', path, state);
         },
 
-        JSXClosingElement(path, { opts }) {
+        JSXClosingElement(path, state) {
           const { node } = path;
-          buildDeclaratorHandler(node, 'name', path, opts);
+          buildDeclaratorHandler(node, 'name', path, state);
         },
 
         LogicalExpression(path, state) {
