@@ -136,7 +136,7 @@ module.exports = function core(defaultLibraryName) {
 
     function buildDeclaratorHandler(node, prop, path, state) {
       const file = (path && path.hub && path.hub.file) || (state && state.file);
-      if (!types.isIdentifier(node[prop])) return;
+      if (!types.isIdentifier(node[prop]) && !types.isJSXIdentifier(node[prop])) return;
       if (specified[node[prop].name]) {
         node[prop] = importMethod(node[prop].name, file, state.opts); // eslint-disable-line
       }
@@ -237,6 +237,16 @@ module.exports = function core(defaultLibraryName) {
         VariableDeclarator(path, state) {
           const { node } = path;
           buildDeclaratorHandler(node, 'init', path, state);
+        },
+
+        JSXOpeningElement(path, { opts }) {
+          const { node } = path;
+          buildDeclaratorHandler(node, 'name', path, opts);
+        },
+
+        JSXClosingElement(path, { opts }) {
+          const { node } = path;
+          buildDeclaratorHandler(node, 'name', path, opts);
         },
 
         LogicalExpression(path, state) {
